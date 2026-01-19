@@ -1,0 +1,86 @@
+# ==========================================
+# Hardened .gitignore - Homelab DevOps
+# ==========================================
+
+# --- [ SYSTEM & USER SHELL ] ---
+# Critical: Prevents leaking your VPS history and access keys
+.bash_history
+.bashrc
+.profile
+.ssh/
+.gitconfig
+.lesshst
+.wget-hsts
+.cloud-locale-test.skip
+get-docker.sh
+*.sh
+
+# --- [ SECRETS & CREDENTIALS ] ---
+# Never push these to GitHub/Gitea
+.env
+.env.*
+*.pem
+*.key
+*.crt
+*.pub
+acme.json
+vault/
+secrets/
+**/*.pfx
+
+# --- [ APP CONFIG & CACHE (CODE-SERVER) ] ---
+# Prevents bloat from VS Code extensions and local storage
+**/config/.cache/
+**/config/.local/
+**/config/extensions/
+**/config/User/workspaceStorage/
+**/config/User/globalStorage/
+node_modules/
+
+# --- [ DATABASE & VOLUMES (STATEFUL) ] ---
+# Blocks all data directories for Postgres, Redis, InfluxDB, etc.
+**/*data*/
+**/*db*/
+**/*database*/
+**/postgres/
+**/redis/
+**/influxdb/
+# Large media assets from Authentik
+**/media/public/flow-backgrounds/
+
+# --- [ DB INTERNAL FILES ] ---
+# Extra safety if files are at the root of a folder
+PG_VERSION
+postmaster.pid
+postmaster.opts
+*.rdb
+*.sql
+*.sqlite
+*.dump
+
+# --- [ STORAGE / FILESHARE ] ---
+# Keep folder structure but ignore all contents
+fileshare/**/*
+!fileshare/.gitkeep
+
+# --- [ IDE & SYSTEM JUNK ] ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+tmp/
+
+# --- [ INFRASTRUCTURE AS CODE ] ---
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+*.tfvars
+
+# --- GITEA SPECIFIC ---
+**/gitea/gitea/conf/app.ini
+**/gitea/gitea/queues/
+**/gitea/gitea/indexers/
+**/gitea/gitea/sessions/
+**/gitea/ssh/ssh_host_*

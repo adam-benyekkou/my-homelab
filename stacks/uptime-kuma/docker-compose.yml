@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    restart: unless-stopped
+    volumes:
+      - uptime_kuma_data:/app/data
+    networks:
+      - proxy-network
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.uptime-kuma.rule=Host(`${DOMAIN_NAME}`)
+      - traefik.http.routers.uptime-kuma.entrypoints=websecure
+      - traefik.http.routers.uptime-kuma.tls.certresolver=myresolver
+      - traefik.http.services.uptime-kuma.loadbalancer.server.port=3001
+      - traefik.docker.network=proxy_network
+      - com.centurylinklabs.watchtower.enable=true
+      - logging=promtail
+volumes:
+  uptime_kuma_data:
+    driver: local
+networks:
+  proxy-network:
+    external: true

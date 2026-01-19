@@ -1,0 +1,24 @@
+services:
+  filestash:
+    image: machines/filestash:latest
+    container_name: filestash
+    user: "0:0"
+    restart: always
+    environment:
+      - APPLICATION_URL=https://filestash.cavydev.com
+    volumes:
+      - /root:/data/my_root_folder
+      - ./filestash_data:/app/data/state
+    networks:
+      - proxy-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.filestash.rule=Host(`filestash.cavydev.com`)"
+      - "traefik.http.routers.filestash.entrypoints=websecure"
+      - "traefik.http.routers.filestash.tls.certresolver=myresolver"
+      - "traefik.http.routers.filestash.middlewares=authentik-auth@docker"
+      - "traefik.http.services.filestash.loadbalancer.server.port=8334"
+
+networks:
+  proxy-network:
+    external: true

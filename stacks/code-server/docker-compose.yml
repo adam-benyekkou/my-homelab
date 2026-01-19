@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/Paris
+      - DEFAULT_WORKSPACE=/root/stacks
+      - PROXY_DOMAIN=${CODE_DOMAIN}
+      - PASSWORD=${CODE_PASSWORD}
+      - AUTH=password
+    volumes:
+      - /root/stacks:/root/stacks
+      - /root/stacks/code-server/config:/config
+    networks:
+      - proxy-network
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.code-server.rule=Host(`${CODE_DOMAIN}`)
+      - traefik.http.routers.code-server.entrypoints=websecure
+      - traefik.http.routers.code-server.tls.certresolver=myresolver
+      - traefik.http.routers.code-server.middlewares=authentik-auth@docker
+      - traefik.http.services.code-server.loadbalancer.server.port=8443
+      - traefik.docker.network=proxy-network
+networks:
+  proxy-network:
+    external: true

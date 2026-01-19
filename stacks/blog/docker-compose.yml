@@ -1,0 +1,70 @@
+version: "3.8"
+services:
+  wordpress:
+    image: wordpress:latest
+    container_name: wordpress
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      WORDPRESS_DB_HOST: wordpress_db:3306
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: wp_
+      PHP_MEMORY_LIMIT: 256M
+      PHP_UPLOAD_MAX_FILESIZE: 64M
+      PHP_POST_MAX_SIZE: 64M
+      PHP_MAX_EXECUTION_TIME: 300
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - proxy-network
+      - wordpress_internal
+    depends_on:
+      - wordpress_db
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.wordpress.rule=Host(`${BLOG_DOMAIN}`)
+      - traefik.http.routers.wordpress.entrypoints=websecure
+      - traefik.http.routers.wordpress.tls.certresolver=myresolver
+      - traefik.http.routers.wordpress.middlewares=wp-secure-headers
+      - traefik.http.middlewares.wp-secure-headers.headers.customrequestheaders.X-Forwarded-Proto=https
+      - traefik.http.services.wordpress.loadbalancer.server.port=80
+      - traefik.docker.network=proxy-network
+      - com.centurylinklabs.watchtower.enable=true
+      - logging=promtail
+
+  wordpress_db:
+    image: mariadb:11
+    container_name: wordpress_db
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - wordpress_db_data:/var/lib/mysql
+    networks:
+      - wordpress_internal
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    labels:
+      - logging=promtail
+
+volumes:
+  wordpress_data:
+    driver: local
+  wordpress_db_data:
+    driver: local
+
+networks:
+  wordpress_internal:
+    internal: true
+  proxy-network:
+    external: true
