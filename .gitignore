@@ -87,3 +87,13 @@ tmp/
 
 # --- HOMARR ---
 **/homarr/configs/*.json
+
+# --- CODE-SERVER SECRETS ---
+**/code-server/config/.config/code-server/config.yaml
+
+# --- MEDIA & ASSETS ---
+# Ignore les icônes personnalisées de Homarr
+**/homarr/homarr/icons/
+
+# Ignore tous les avatars Gitea (ce sont des fichiers uploadés)
+**/gitea/gitea/gitea/avatars/
