@@ -97,3 +97,6 @@ tmp/
 
 # Ignore tous les avatars Gitea (ce sont des fichiers uploadés)
 **/gitea/gitea/gitea/avatars/
+
+# --- AUTHENTIK ---
+**/authentik/media/public/
