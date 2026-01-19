@@ -84,3 +84,6 @@ tmp/
 **/gitea/gitea/indexers/
 **/gitea/gitea/sessions/
 **/gitea/ssh/ssh_host_*
+
+# --- HOMARR ---
+**/homarr/configs/*.json
