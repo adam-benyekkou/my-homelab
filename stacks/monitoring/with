@@ -1,4 +1,0 @@
-{{ with secret "secret/data/monitoring" }}
-GF_ADMIN_PASSWORD={{ .Data.data.GRAFANA_ADMIN_PASSWORD }}
-MONITORING_DOMAIN={{ .Data.data.MONITORING_DOMAIN }}
-{{ end }}
