@@ -1,3 +1,4 @@
+version: "3.8"
 services:
   gitea:
     image: gitea/gitea:latest
@@ -7,7 +8,7 @@ services:
       - proxy-network
       - gitea-internal
     volumes:
-      - /root/stacks/gitea/data:/data
+      - ./data:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     environment:
@@ -36,7 +37,6 @@ services:
       - traefik.http.routers.gitea.tls.certresolver=myresolver
       - traefik.http.services.gitea.loadbalancer.server.port=3000
       - traefik.docker.network=proxy-network
-
   gitea-db:
     image: postgres:15
     container_name: gitea-db
@@ -48,10 +48,9 @@ services:
       - POSTGRES_PASSWORD=${GITEA__database__PASSWD}
       - POSTGRES_DB=${GITEA__database__NAME}
     volumes:
-      - /root/stacks/gitea/db-data:/var/lib/postgresql/data
-
+      - ./db-data:/var/lib/postgresql/data
 networks:
   gitea-internal:
-    external: false
+    driver: bridge
   proxy-network:
     external: true

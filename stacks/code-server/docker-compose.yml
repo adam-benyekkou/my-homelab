@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   code-server:
     image: lscr.io/linuxserver/code-server:latest
@@ -10,13 +9,16 @@ services:
       - PUID=0
       - PGID=0
       - TZ=Europe/Paris
-      - DEFAULT_WORKSPACE=/root/stacks
+      # MODIFIÉ : Nouveau chemin par défaut
+      - DEFAULT_WORKSPACE=/opt/infrastructure/stacks
       - PROXY_DOMAIN=${CODE_DOMAIN}
       - PASSWORD=${CODE_PASSWORD}
       - AUTH=password
     volumes:
-      - /root/stacks:/root/stacks
-      - /root/stacks/code-server/config:/config
+      # MODIFIÉ : Montage de la nouvelle infrastructure
+      - /opt/infrastructure/stacks:/opt/infrastructure/stacks
+      # MODIFIÉ : Chemin relatif pour la config de l'éditeur
+      - ./config:/config
     networks:
       - proxy-network
     labels:
@@ -27,6 +29,7 @@ services:
       - traefik.http.routers.code-server.middlewares=authentik-auth@docker
       - traefik.http.services.code-server.loadbalancer.server.port=8443
       - traefik.docker.network=proxy-network
+
 networks:
   proxy-network:
     external: true

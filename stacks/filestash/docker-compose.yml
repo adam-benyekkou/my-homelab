@@ -7,7 +7,8 @@ services:
     environment:
       - APPLICATION_URL=https://filestash.cavydev.com
     volumes:
-      - /root:/data/my_root_folder
+      - /root:/data/root_home
+      - /opt/infrastructure:/data/infrastructure
       - ./filestash_data:/app/data/state
     networks:
       - proxy-network

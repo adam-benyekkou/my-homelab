@@ -1,0 +1,28 @@
+services:
+  vault:
+    image: hashicorp/vault:latest
+    container_name: vault
+    restart: unless-stopped
+    command: server
+    ports:
+      - 8210:8210
+    environment:
+      VAULT_ADDR: http://0.0.0.0:8210
+      VAULT_UI: "true"
+      VAULT_LOCAL_CONFIG: |
+        {
+          "storage": {"file": {"path": "/vault/file"}},
+          "listener": {"tcp": {"address": "0.0.0.0:8210", "tls_disable": 1}},
+          "disable_mlock": true
+        }
+    volumes:
+      - vault_data:/vault/file
+    networks:
+      - proxy-network
+
+networks:
+  proxy-network:
+    external: true
+
+volumes:
+  vault_data:

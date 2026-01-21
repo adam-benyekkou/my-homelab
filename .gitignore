@@ -1,102 +1,103 @@
 # ==========================================
-# Hardened .gitignore - Homelab DevOps
+# 1. APPLICATION DATA & PERSISTENCE
+# We track the configuration (YAML), but never the data.
 # ==========================================
+**/data/
+**/db/
+**/db-data/
+**/database/
+**/postgres/
+**/postgres_data/
+**/redis/
+**/redis_data/
+**/n8n_data/
+**/homarr_data/
+**/filestash_data/
+**/media/
+**/logs/
+**/vault/file/
 
-# --- [ SYSTEM & USER SHELL ] ---
-# Critical: Prevents leaking your VPS history and access keys
-.bash_history
-.bashrc
-.profile
-.ssh/
-.gitconfig
-.lesshst
-.wget-hsts
-.cloud-locale-test.skip
-get-docker.sh
-*.sh
+# App-specific data (Gitea)
+**/gitea/gitea/
+**/gitea/git/
+**/gitea/ssh/
 
-# --- [ SECRETS & CREDENTIALS ] ---
-# Never push these to GitHub/Gitea
+# ==========================================
+# 2. SECURITY & SECRETS (CRITICAL)
+# ==========================================
+# Environment files
 .env
+*.env
 .env.*
+!.env.example
+
+# SSH Keys & Certificates
 *.pem
 *.key
-*.crt
 *.pub
-acme.json
-vault/
-secrets/
-**/*.pfx
+**/*_key
+**/*_key.pub
+**/authorized_keys
+**/.ssh/
+**/certs/
+**/letsencrypt/
 
-# --- [ APP CONFIG & CACHE (CODE-SERVER) ] ---
-# Prevents bloat from VS Code extensions and local storage
-**/config/.cache/
-**/config/.local/
-**/config/extensions/
-**/config/User/workspaceStorage/
-**/config/User/globalStorage/
-node_modules/
+# Deployment Secrets (Vault, Ansible, Cloud)
+.vault_pass
+*.vult
+secrets.yml
+credentials.yml
+role_id
+secret_id
 
-# --- [ DATABASE & VOLUMES (STATEFUL) ] ---
-# Blocks all data directories for Postgres, Redis, InfluxDB, etc.
-**/*data*/
-**/*db*/
-**/*database*/
-**/postgres/
-**/redis/
-**/influxdb/
-# Large media assets from Authentik
-**/media/public/flow-backgrounds/
-
-# --- [ DB INTERNAL FILES ] ---
-# Extra safety if files are at the root of a folder
-PG_VERSION
-postmaster.pid
-postmaster.opts
-*.rdb
-*.sql
-*.sqlite
-*.dump
-
-# --- [ STORAGE / FILESHARE ] ---
-# Keep folder structure but ignore all contents
-fileshare/**/*
-!fileshare/.gitkeep
-
-# --- [ IDE & SYSTEM JUNK ] ---
-.vscode/
-.idea/
-.DS_Store
-Thumbs.db
-*.log
-tmp/
-
-# --- [ INFRASTRUCTURE AS CODE ] ---
-.terraform/
+# ==========================================
+# 3. DEVOPS TOOLS (TERRAFORM & ANSIBLE)
+# ==========================================
+# Terraform
 *.tfstate
 *.tfstate.backup
-.terraform.lock.hcl
+.terraform/
 *.tfvars
+*.tfvars.json
+.terraform.lock.hcl
 
-# --- GITEA SPECIFIC ---
-**/gitea/gitea/conf/app.ini
-**/gitea/gitea/queues/
-**/gitea/gitea/indexers/
-**/gitea/gitea/sessions/
-**/gitea/ssh/ssh_host_*
+# Ansible
+*.retry
+inventory.ini
+ansible_secret_vars.yml
 
-# --- HOMARR ---
-**/homarr/configs/*.json
+# ==========================================
+# 4. RUNTIME & SYSTEM
+# ==========================================
+.docker/
+pidfile
+*.log
+*.tmp
+*.swp
+.DS_Store
 
-# --- CODE-SERVER SECRETS ---
-**/code-server/config/.config/code-server/config.yaml
+# ==========================================
+# 5. DEVELOPMENT (NODE / ANGULAR / IDE)
+# ==========================================
+node_modules/
+dist/
+.angular/
+.npm
+package-lock.json
+yarn.lock
+.vscode/
+.idea/
 
-# --- MEDIA & ASSETS ---
-# Ignore les icônes personnalisées de Homarr
-**/homarr/homarr/icons/
 
-# Ignore tous les avatars Gitea (ce sont des fichiers uploadés)
-**/gitea/gitea/gitea/avatars/
+**/config/extensions/
+**/config/.cache/
+**/config/.local/
 
-# --- AUTHENTIK ---
-**/authentik/media/public/
+# ==========================================
+# 5. IMAGES & MEDIAS
+# ==========================================
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.gif
