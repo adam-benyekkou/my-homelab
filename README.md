@@ -10,8 +10,11 @@ The infrastructure is orchestrated using Docker and managed via Dockge, followin
 
 | Category | Services |
 | :--- | :--- |
+| **Infrastructure as Code** | Terraform, Ansible |
+| **CI/CD** | GitHub Actions |
 | **Edge & Routing** | Traefik (Reverse Proxy), Cloudflare |
 | **Identity & Security** | Authentik (SSO), HashiCorp Vault |
+| **Data Protection** | Restic, Backblaze B2 (Offsite Backup) |
 | **Observability** | Prometheus, Grafana, Loki, Promtail, AlertManager, Uptime Kuma |
 | **Development** | Gitea (Git Mirroring), Code-Server (Remote IDE) |
 | **Automation** | n8n |
