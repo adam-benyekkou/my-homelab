@@ -4,7 +4,7 @@ resource "hcloud_ssh_key" "cavy_key" {
 }
 
 # The Server definition
-resource "hcloud_server" "cavy_vps" {
+resource "hcloud_server" "cavy-vps" {
   name        = "cavy-vps"
   image       = "debian-12"
   server_type = var.server_type
