@@ -9,15 +9,12 @@ services:
       - PUID=0
       - PGID=0
       - TZ=Europe/Paris
-      # MODIFIÉ : Nouveau chemin par défaut
       - DEFAULT_WORKSPACE=/opt/infrastructure/stacks
       - PROXY_DOMAIN=${CODE_DOMAIN}
       - PASSWORD=${CODE_PASSWORD}
       - AUTH=password
     volumes:
-      # MODIFIÉ : Montage de la nouvelle infrastructure
       - /opt/infrastructure/stacks:/opt/infrastructure/stacks
-      # MODIFIÉ : Chemin relatif pour la config de l'éditeur
       - ./config:/config
     networks:
       - proxy-network
@@ -29,7 +26,6 @@ services:
       - traefik.http.routers.code-server.middlewares=authentik-auth@docker
       - traefik.http.services.code-server.loadbalancer.server.port=8443
       - traefik.docker.network=proxy-network
-
 networks:
   proxy-network:
     external: true

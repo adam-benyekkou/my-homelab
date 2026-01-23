@@ -1,5 +1,4 @@
 version: "3.8"
-
 services:
   wordpress:
     image: wordpress:latest
@@ -25,27 +24,21 @@ services:
     depends_on:
       - wordpress_db
     labels:
-      - "traefik.enable=true"
-      # Accepte le domaine racine ET la version www pour générer les certificats SSL
-      - "traefik.http.routers.wordpress.rule=Host(`${BLOG_DOMAIN}`) || Host(`www.${BLOG_DOMAIN}`)"
-      - "traefik.http.routers.wordpress.entrypoints=websecure"
-      - "traefik.http.routers.wordpress.tls.certresolver=myresolver"
-      
+      - traefik.enable=true
+      - traefik.http.routers.wordpress.rule=Host(`${BLOG_DOMAIN}`) ||
+        Host(`www.${BLOG_DOMAIN}`)
+      - traefik.http.routers.wordpress.entrypoints=websecure
+      - traefik.http.routers.wordpress.tls.certresolver=myresolver
       # Activation des middlewares (Redirection WWW d'abord, puis tes Headers)
-      - "traefik.http.routers.wordpress.middlewares=redirect-www,wp-secure-headers"
-
-      # Middleware : Redirection WWW -> non-WWW (301 Permanent)
-      - "traefik.http.middlewares.redirect-www.redirectregex.regex=^https?://www.${BLOG_DOMAIN}/(.*)"
-      - "traefik.http.middlewares.redirect-www.redirectregex.replacement=https://${BLOG_DOMAIN}/$${1}"
-      - "traefik.http.middlewares.redirect-www.redirectregex.permanent=true"
-
-      # Tes labels de sécurité et réseau existants
-      - "traefik.http.middlewares.wp-secure-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
-      - "traefik.http.services.wordpress.loadbalancer.server.port=80"
-      - "traefik.docker.network=proxy-network"
-      - "com.centurylinklabs.watchtower.enable=true"
-      - "logging=promtail"
-
+      - traefik.http.routers.wordpress.middlewares=redirect-www,wp-secure-headers
+      - traefik.http.middlewares.redirect-www.redirectregex.regex=^https?://www.${BLOG_DOMAIN}/(.*)
+      - traefik.http.middlewares.redirect-www.redirectregex.replacement=https://${BLOG_DOMAIN}/$${1}
+      - traefik.http.middlewares.redirect-www.redirectregex.permanent=true
+      - traefik.http.middlewares.wp-secure-headers.headers.customrequestheaders.X-Forwarded-Proto=https
+      - traefik.http.services.wordpress.loadbalancer.server.port=80
+      - traefik.docker.network=proxy-network
+      - com.centurylinklabs.watchtower.enable=true
+      - logging=promtail
   wordpress_db:
     image: mariadb:11
     container_name: wordpress_db
@@ -66,14 +59,12 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
     labels:
-      - "logging=promtail"
-
+      - logging=promtail
 volumes:
   wordpress_data:
     driver: local
   wordpress_db_data:
     driver: local
-
 networks:
   wordpress_internal:
     internal: true

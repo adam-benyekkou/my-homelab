@@ -1,4 +1,3 @@
-# Remplace proxy_network par proxy-network dans le label traefik.docker.networkversion: "3.8"
 services:
   uptime-kuma:
     image: louislam/uptime-kuma:latest
