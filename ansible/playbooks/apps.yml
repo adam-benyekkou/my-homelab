@@ -1,0 +1,7 @@
+---
+# apps.yml
+- name: Déploiement des applications
+  hosts: all
+  become: yes
+  roles:
+    - apps

@@ -1,0 +1,13 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/system-essentials
+
+- name: Update APT cache
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600 # Do not update if done in the last hour
+
+- name: Install essential packages
+  ansible.builtin.apt:
+    name: "{{ essential_packages }}"
+    state: present

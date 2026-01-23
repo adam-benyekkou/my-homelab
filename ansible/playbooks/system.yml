@@ -1,0 +1,9 @@
+---
+#system.yml
+- name: Configuration système de base
+  hosts: all
+  become: yes
+  roles:
+    - system-essentials
+    - security-hardening
+    - docker-runtime
