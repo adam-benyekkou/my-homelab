@@ -1,3 +1,60 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for roles/edge-proxy
+
+# --- 1. Network Preparation ---
+- name: Ensure the external proxy network exists
+  community.docker.docker_network:
+    name: "{{ docker_proxy_network }}"
+    state: present
+
+# --- 2. Traefik Stack Setup ---
+- name: Create Traefik stack directories
+  ansible.builtin.file:
+    path: "/opt/infrastructure/stacks/traefik/{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "."
+    - letsencrypt
+
+- name: Create acme.json with strict permissions
+  ansible.builtin.file:
+    path: /opt/infrastructure/stacks/traefik/letsencrypt/acme.json
+    state: touch
+    mode: '0600' # Critical for Traefik SSL
+
+- name: Deploy Traefik Compose file
+  ansible.builtin.template:
+    src: traefik-compose.yml.j2
+    dest: /opt/infrastructure/stacks/traefik/docker-compose.yml
+
+# --- 3. Authentik Stack Setup ---
+- name: Create Authentik stack directories
+  ansible.builtin.file:
+    path: "/opt/infrastructure/stacks/authentik/{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "."
+    - database
+    - redis
+    - media
+    - certs
+    - custom-templates
+
+- name: Deploy Authentik Compose file
+  ansible.builtin.template:
+    src: authentik-compose.yml.j2
+    dest: /opt/infrastructure/stacks/authentik/docker-compose.yml
+
+# --- 4. Start the Stacks ---
+- name: Start Traefik stack
+  community.docker.docker_compose_v2:
+    project_src: /opt/infrastructure/stacks/traefik
+    state: present
+
+- name: Start Authentik stack
+  community.docker.docker_compose_v2:
+    project_src: /opt/infrastructure/stacks/authentik
+    state: present

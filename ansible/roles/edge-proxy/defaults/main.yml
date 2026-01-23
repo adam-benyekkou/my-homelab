@@ -1,3 +1,13 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # defaults file for roles/edge-proxy
+
+# Network settings
+docker_proxy_network: "proxy-network"
+
+# Traefik Defaults
+traefik_log_level: "INFO"
+
+# Authentik Defaults (Non-sensitive)
+authentik_db_user: "authentik"
+authentik_db_name: "authentik"
