@@ -1,3 +1,9 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # defaults file for roles/security-hardening
+
+# Ports to allow in the firewall
+ufw_allowed_ports:
+  - "22"   # SSH
+  - "80"   # HTTP
+  - "443"  # HTTPS
