@@ -52,6 +52,104 @@
   ],
   "apps": [
     {
+      "id": "07e55ad4-094c-4112-a180-8542970263e2",
+      "name": "Hetzner Server Manager",
+      "url": "https://console.hetzner.com/projects/12954836/dashboard",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/hetzner-h.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "https://console.hetzner.com/projects/12954836/dashboard"
+      },
+      "area": {
+        "type": "category",
+        "properties": {
+          "id": "c0ff8c64-cd30-4543-861c-d8b0097d6b1a"
+        }
+      },
+      "shape": {
+        "lg": {
+          "location": {
+            "x": 2,
+            "y": 0
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
+      }
+    },
+    {
+      "id": "361054fa-7918-4529-9a68-2f95a5cb9e60",
+      "name": "n8n",
+      "url": "https://n8n.cavydev.com",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/n8n.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "https://n8n.cavydev.com/"
+      },
+      "area": {
+        "type": "category",
+        "properties": {
+          "id": "4c38835e-5fc0-48a7-bdc7-f719f1814504"
+        }
+      },
+      "shape": {
+        "lg": {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
+      }
+    },
+    {
       "id": "2a2cc807-3c22-4a88-8e5b-5399c5efe62c",
       "name": "Dockge",
       "url": "https://dockge.cavydev.com",
@@ -81,6 +179,55 @@
         "type": "category",
         "properties": {
           "id": "c0ff8c64-cd30-4543-861c-d8b0097d6b1a"
+        }
+      },
+      "shape": {
+        "lg": {
+          "location": {
+            "x": 3,
+            "y": 0
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
+      }
+    },
+    {
+      "id": "3ffb8a66-5c2b-42ac-a76e-13dcd5e109ab",
+      "name": "Gitea",
+      "url": "https://gitea.cavydev.com",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/gitea.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "https://gitea.cavydev.com/"
+      },
+      "area": {
+        "type": "category",
+        "properties": {
+          "id": "4c38835e-5fc0-48a7-bdc7-f719f1814504"
         }
       },
       "shape": {
@@ -150,11 +297,11 @@
       }
     },
     {
-      "id": "361054fa-7918-4529-9a68-2f95a5cb9e60",
-      "name": "n8n",
-      "url": "https://n8n.cavydev.com",
+      "id": "5b9c4147-c887-4b31-bea5-7c7e442ecb54",
+      "name": "Portfolio",
+      "url": "https://portfolio.cavydev.com",
       "appearance": {
-        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/n8n.svg",
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/booklogr.svg",
         "appNameStatus": "normal",
         "positionAppName": "column",
         "lineClampAppName": 1,
@@ -173,7 +320,7 @@
       },
       "behaviour": {
         "isOpeningNewTab": true,
-        "externalUrl": "https://n8n.cavydev.com/"
+        "externalUrl": "https://portfolio.cavydev.com/"
       },
       "area": {
         "type": "category",
@@ -184,7 +331,56 @@
       "shape": {
         "lg": {
           "location": {
-            "x": 0,
+            "x": 6,
+            "y": 0
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
+      }
+    },
+    {
+      "id": "9f0cd6c4-dbb3-49f6-90a5-05b11fdf0ed1",
+      "name": "My blog",
+      "url": "https://cavydev.com/wp-admin",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/wordpress.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "https://cavydev.com/wp-admin/"
+      },
+      "area": {
+        "type": "category",
+        "properties": {
+          "id": "4c38835e-5fc0-48a7-bdc7-f719f1814504"
+        }
+      },
+      "shape": {
+        "lg": {
+          "location": {
+            "x": 4,
             "y": 0
           },
           "size": {
@@ -234,6 +430,55 @@
         "lg": {
           "location": {
             "x": 1,
+            "y": 0
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
+      }
+    },
+    {
+      "id": "3610eaf2-6160-4fca-b9ab-4df0e9400b44",
+      "name": "Freshrss",
+      "url": "https://freshrss.cavydev.com/i/?rid=696961f31ed0b",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/freshrss.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "https://freshrss.cavydev.com/i/?rid=696961f31ed0b"
+      },
+      "area": {
+        "type": "category",
+        "properties": {
+          "id": "4c38835e-5fc0-48a7-bdc7-f719f1814504"
+        }
+      },
+      "shape": {
+        "lg": {
+          "location": {
+            "x": 5,
             "y": 0
           },
           "size": {
@@ -332,153 +577,6 @@
         "lg": {
           "location": {
             "x": 0,
-            "y": 0
-          },
-          "size": {
-            "width": 1,
-            "height": 1
-          }
-        }
-      },
-      "integration": {
-        "type": null,
-        "properties": []
-      }
-    },
-    {
-      "id": "3ffb8a66-5c2b-42ac-a76e-13dcd5e109ab",
-      "name": "Gitea",
-      "url": "https://gitea.cavydev.com",
-      "appearance": {
-        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/gitea.svg",
-        "appNameStatus": "normal",
-        "positionAppName": "column",
-        "lineClampAppName": 1,
-        "appNameFontSize": 16
-      },
-      "network": {
-        "enabledStatusChecker": true,
-        "statusCodes": [
-          "200",
-          "301",
-          "302",
-          "304",
-          "307",
-          "308"
-        ]
-      },
-      "behaviour": {
-        "isOpeningNewTab": true,
-        "externalUrl": "https://gitea.cavydev.com/"
-      },
-      "area": {
-        "type": "category",
-        "properties": {
-          "id": "4c38835e-5fc0-48a7-bdc7-f719f1814504"
-        }
-      },
-      "shape": {
-        "lg": {
-          "location": {
-            "x": 3,
-            "y": 0
-          },
-          "size": {
-            "width": 1,
-            "height": 1
-          }
-        }
-      },
-      "integration": {
-        "type": null,
-        "properties": []
-      }
-    },
-    {
-      "id": "9f0cd6c4-dbb3-49f6-90a5-05b11fdf0ed1",
-      "name": "My blog",
-      "url": "https://cavydev.com/wp-admin",
-      "appearance": {
-        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/wordpress.svg",
-        "appNameStatus": "normal",
-        "positionAppName": "column",
-        "lineClampAppName": 1,
-        "appNameFontSize": 16
-      },
-      "network": {
-        "enabledStatusChecker": true,
-        "statusCodes": [
-          "200",
-          "301",
-          "302",
-          "304",
-          "307",
-          "308"
-        ]
-      },
-      "behaviour": {
-        "isOpeningNewTab": true,
-        "externalUrl": "https://cavydev.com/wp-admin/"
-      },
-      "area": {
-        "type": "category",
-        "properties": {
-          "id": "4c38835e-5fc0-48a7-bdc7-f719f1814504"
-        }
-      },
-      "shape": {
-        "lg": {
-          "location": {
-            "x": 4,
-            "y": 0
-          },
-          "size": {
-            "width": 1,
-            "height": 1
-          }
-        }
-      },
-      "integration": {
-        "type": null,
-        "properties": []
-      }
-    },
-    {
-      "id": "3610eaf2-6160-4fca-b9ab-4df0e9400b44",
-      "name": "Freshrss",
-      "url": "https://freshrss.cavydev.com/i/?rid=696961f31ed0b",
-      "appearance": {
-        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/freshrss.svg",
-        "appNameStatus": "normal",
-        "positionAppName": "column",
-        "lineClampAppName": 1,
-        "appNameFontSize": 16
-      },
-      "network": {
-        "enabledStatusChecker": true,
-        "statusCodes": [
-          "200",
-          "301",
-          "302",
-          "304",
-          "307",
-          "308"
-        ]
-      },
-      "behaviour": {
-        "isOpeningNewTab": true,
-        "externalUrl": "https://freshrss.cavydev.com/i/?rid=696961f31ed0b"
-      },
-      "area": {
-        "type": "category",
-        "properties": {
-          "id": "4c38835e-5fc0-48a7-bdc7-f719f1814504"
-        }
-      },
-      "shape": {
-        "lg": {
-          "location": {
-            "x": 5,
             "y": 0
           },
           "size": {
@@ -640,11 +738,11 @@
       }
     },
     {
-      "id": "bd800053-49f5-4c24-b7bc-0f824a0cdb06",
-      "name": "Vault",
-      "url": "http://46.224.199.225:8210/ui/vault/dashboard",
+      "id": "94e50a88-6f53-42a7-9551-a5b2e744cfa4",
+      "name": "Docker Hub",
+      "url": "https://hub.docker.com/repositories/cavydev",
       "appearance": {
-        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/vault.svg",
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/docker-engine.svg",
         "appNameStatus": "normal",
         "positionAppName": "column",
         "lineClampAppName": 1,
@@ -663,7 +761,7 @@
       },
       "behaviour": {
         "isOpeningNewTab": true,
-        "externalUrl": "http://46.224.199.225:8210/ui/vault/dashboard"
+        "externalUrl": "https://hub.docker.com/repositories/cavydev"
       },
       "area": {
         "type": "category",
@@ -674,7 +772,7 @@
       "shape": {
         "lg": {
           "location": {
-            "x": 5,
+            "x": 7,
             "y": 0
           },
           "size": {
@@ -787,11 +885,11 @@
       }
     },
     {
-      "id": "07e55ad4-094c-4112-a180-8542970263e2",
-      "name": "Hetzner Server Manager",
-      "url": "https://console.hetzner.com/projects/12954836/dashboard",
+      "id": "bd800053-49f5-4c24-b7bc-0f824a0cdb06",
+      "name": "Vault",
+      "url": "http://46.224.199.225:8210/ui/vault/dashboard",
       "appearance": {
-        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/hetzner-h.svg",
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/vault.svg",
         "appNameStatus": "normal",
         "positionAppName": "column",
         "lineClampAppName": 1,
@@ -810,7 +908,7 @@
       },
       "behaviour": {
         "isOpeningNewTab": true,
-        "externalUrl": "https://console.hetzner.com/projects/12954836/dashboard"
+        "externalUrl": "http://46.224.199.225:8210/ui/vault/dashboard"
       },
       "area": {
         "type": "category",
@@ -821,7 +919,7 @@
       "shape": {
         "lg": {
           "location": {
-            "x": 2,
+            "x": 5,
             "y": 0
           },
           "size": {
