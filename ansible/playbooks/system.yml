@@ -1,5 +1,5 @@
 ---
-#system.yml
+# system.yml
 - name: Configuration système de base
   hosts: all
   become: true

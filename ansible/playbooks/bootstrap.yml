@@ -1,11 +1,11 @@
 ---
 - name: Bootstrap New Server
   hosts: all
-  become: yes
+  become: true
   vars:
     # Setup variables for bootstrap (override in inventory/group_vars usually)
     sysadmin_user: sysadmin
-    
+
   tasks:
     - name: Import System Essentials
       ansible.builtin.import_role:
@@ -17,6 +17,7 @@
       vars:
         # Enable root lock only after user is created and tested!
         lock_root: false
-    
-    - import_role:
+
+    - name: Import Security Hardening (Redundant?)
+      ansible.builtin.import_role:
         name: security-hardening
