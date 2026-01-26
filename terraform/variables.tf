@@ -8,5 +8,5 @@ variable "location" {
 }
 
 variable "server_type" {
-  default = "cx32" 
+  default = "cx32"
 }
