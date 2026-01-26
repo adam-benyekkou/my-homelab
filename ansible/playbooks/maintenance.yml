@@ -10,13 +10,14 @@
         autoclean: yes
         autoremove: yes
 
-    - name: Clean Docker system
-      community.docker.docker_prune:
-        containers: yes
-        images: yes
-        networks: yes
-        volumes: no # Safer to keep volumes
-        builder_cache: yes
+    # - name: Clean Docker system
+    #   community.docker.docker_prune:
+    #     containers: yes
+    #     images: yes
+    #     networks: yes
+    #     volumes: no
+    #     builder_cache: yes
+
 
     - name: Check if reboot required
       stat:

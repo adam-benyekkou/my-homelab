@@ -1,5 +1,5 @@
 ---
 # site.yml
-- import_playbook: 01-system.yml
-- import_playbook: 02-infrastructure.yml
-- import_playbook: 03-apps.yml
+- import_playbook: system.yml
+# - import_playbook: infrastructure.yml # Missing file?
+- import_playbook: apps.yml
