@@ -1,11 +1,15 @@
 galaxy_info:
   author: Adam Benyekkou
-  description: Homelab backup role
+  description: Homelab role
   company: CavyDev
+
   license: MIT
+
   min_ansible_version: "2.12"
+
   platforms:
   - name: Debian
     versions:
     - 12
+
 dependencies: []

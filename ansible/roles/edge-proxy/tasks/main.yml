@@ -28,6 +28,7 @@
   ansible.builtin.template:
     src: traefik-compose.yml.j2
     dest: /opt/infrastructure/stacks/traefik/docker-compose.yml
+    mode: '0644'
 
 # --- 3. Authentik Stack Setup ---
 - name: Create Authentik stack directories
@@ -47,6 +48,7 @@
   ansible.builtin.template:
     src: authentik-compose.yml.j2
     dest: /opt/infrastructure/stacks/authentik/docker-compose.yml
+    mode: '0644'
 
 # --- 4. Start the Stacks ---
 - name: Start Traefik stack

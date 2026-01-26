@@ -14,23 +14,23 @@
 
 - name: Install Docker and Docker Compose
   ansible.builtin.apt:
-    name: 
+    name:
       - docker-ce
       - docker-ce-cli
       - containerd.io
       - docker-compose-plugin
     state: present
-    update_cache: yes
+    update_cache: true
 
 - name: Ensure Docker service is running and enabled on boot
   ansible.builtin.systemd:
     name: docker
     state: started
-    enabled: yes
+    enabled: true
 
 - name: Add admin user to the docker group
   ansible.builtin.user:
     name: "{{ docker_admin_user }}"
     groups: docker
-    append: yes
+    append: true
   # Requires reconnecting to the server for the group change to take effect

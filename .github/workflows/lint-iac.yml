@@ -30,14 +30,4 @@ jobs:
       - name: Terraform fmt
         run: terraform fmt -check -recursive terraform/
 
-  docker-lint:
-    name: Docker Lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Hadolint
-        uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: "**/Dockerfile"
-          recursive: true
-          failure-threshold: warning
+

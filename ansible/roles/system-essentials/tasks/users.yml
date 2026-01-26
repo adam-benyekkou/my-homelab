@@ -8,10 +8,10 @@
   ansible.builtin.user:
     name: "{{ sysadmin_user | default('sysadmin') }}"
     groups: sudo
-    append: yes
+    append: true
     shell: /bin/bash
     state: present
-    create_home: yes
+    create_home: true
 
 - name: Set authorized key for sysadmin
   ansible.builtin.authorized_key:

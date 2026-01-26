@@ -11,7 +11,7 @@
   ansible.builtin.service:
     name: prometheus-node-exporter
     state: started
-    enabled: yes
+    enabled: true
 
 # Log Shipping with Promtail (Binary installation as it's often more up to date than repo)
 # Assuming architecture is amd64 for simplicity, but ideally should be dynamic.
@@ -50,11 +50,13 @@
   ansible.builtin.template:
     src: promtail-config.yml.j2
     dest: /etc/promtail/promtail-config.yml
+    mode: '0644'
   notify: Restart Promtail
 
 - name: Create Promtail Service
   ansible.builtin.copy:
     dest: /etc/systemd/system/promtail.service
+    mode: '0644'
     content: |
       [Unit]
       Description=Promtail service
