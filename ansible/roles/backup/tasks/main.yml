@@ -1,3 +1,23 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for roles/backup
+
+- name: Install Restic
+  ansible.builtin.apt:
+    name: restic
+    state: present
+
+- name: Create backup script
+  ansible.builtin.template:
+    src: backup-homelab.sh.j2
+    dest: /usr/local/bin/backup-homelab.sh
+    mode: '0700'
+    owner: root
+    group: root
+
+- name: Configure cron job for daily backup
+  ansible.builtin.cron:
+    name: "Daily Homelab Backup"
+    minute: "0"
+    hour: "3"
+    job: "/usr/local/bin/backup-homelab.sh >> /var/log/backup-homelab.log 2>&1"

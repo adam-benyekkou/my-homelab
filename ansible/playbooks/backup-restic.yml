@@ -1,0 +1,14 @@
+---
+- name: Trigger Manual Backup
+  hosts: all
+  become: yes
+  tasks:
+    - import_role:
+        name: backup
+        
+    - name: Run Backup Script
+      command: /usr/local/bin/backup-homelab.sh
+      register: backup_output
+      
+    - debug:
+        var: backup_output.stdout_lines

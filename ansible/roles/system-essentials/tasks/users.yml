@@ -1,0 +1,36 @@
+# users.yml
+- name: Ensure sudo group exists
+  ansible.builtin.group:
+    name: sudo
+    state: present
+
+- name: Create sysadmin user
+  ansible.builtin.user:
+    name: "{{ sysadmin_user | default('sysadmin') }}"
+    groups: sudo
+    append: yes
+    shell: /bin/bash
+    state: present
+    create_home: yes
+
+- name: Set authorized key for sysadmin
+  ansible.builtin.authorized_key:
+    user: "{{ sysadmin_user | default('sysadmin') }}"
+    state: present
+    key: "{{ sysadmin_ssh_public_key }}"
+  when: sysadmin_ssh_public_key is defined
+
+- name: Allow passwordless sudo for sudo group
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%sudo'
+    line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+  when: passwordless_sudo | default(false)
+
+- name: Lock root password (optional security measure)
+  ansible.builtin.user:
+    name: root
+    password_lock: yes
+  when: lock_root | default(false)

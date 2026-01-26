@@ -1,3 +1,76 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for roles/observability
+
+- name: Install Prometheus Node Exporter
+  ansible.builtin.apt:
+    name: prometheus-node-exporter
+    state: present
+
+- name: Ensure Node Exporter is running
+  ansible.builtin.service:
+    name: prometheus-node-exporter
+    state: started
+    enabled: yes
+
+# Log Shipping with Promtail (Binary installation as it's often more up to date than repo)
+# Assuming architecture is amd64 for simplicity, but ideally should be dynamic.
+- name: Check if Promtail is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/promtail
+  register: promtail_bin
+
+- name: Download Promtail
+  ansible.builtin.get_url:
+    url: "https://github.com/grafana/loki/releases/download/v2.9.2/promtail-linux-amd64.zip"
+    dest: "/tmp/promtail.zip"
+  when: not promtail_bin.stat.exists
+
+- name: Install unzip
+  ansible.builtin.apt:
+    name: unzip
+    state: present
+  when: not promtail_bin.stat.exists
+
+- name: Unzip Promtail
+  ansible.builtin.unarchive:
+    src: "/tmp/promtail.zip"
+    dest: "/usr/local/bin"
+    remote_src: yes
+    mode: '0755'
+  when: not promtail_bin.stat.exists
+
+- name: Create Promtail configuration directory
+  ansible.builtin.file:
+    path: /etc/promtail
+    state: directory
+    mode: '0755'
+
+- name: Configure Promtail
+  ansible.builtin.template:
+    src: promtail-config.yml.j2
+    dest: /etc/promtail/promtail-config.yml
+  notify: Restart Promtail
+
+- name: Create Promtail Service
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/promtail.service
+    content: |
+      [Unit]
+      Description=Promtail service
+      After=network.target
+
+      [Service]
+      Type=simple
+      User=root
+      ExecStart=/usr/local/bin/promtail -config.file /etc/promtail/promtail-config.yml
+
+      [Install]
+      WantedBy=multi-user.target
+  notify: Restart Promtail
+
+- name: Start and enable Promtail
+  ansible.builtin.service:
+    name: promtail
+    state: started
+    enabled: yes

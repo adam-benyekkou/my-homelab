@@ -1,0 +1,28 @@
+---
+- name: Routine Maintenance
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update all packages
+      ansible.builtin.apt:
+        upgrade: dist
+        update_cache: yes
+        autoclean: yes
+        autoremove: yes
+
+    - name: Clean Docker system
+      community.docker.docker_prune:
+        containers: yes
+        images: yes
+        networks: yes
+        volumes: no # Safer to keep volumes
+        builder_cache: yes
+
+    - name: Check if reboot required
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+
+    - name: Reboot if required
+      reboot:
+      when: reboot_required_file.stat.exists

@@ -2,12 +2,22 @@
 ---
 # tasks file for roles/system-essentials
 
-- name: Update APT cache
+- name: Update apt cache
   ansible.builtin.apt:
     update_cache: yes
-    cache_valid_time: 3600 # Do not update if done in the last hour
+    cache_valid_time: 3600
+
+- import_tasks: users.yml
+- import_tasks: auto-updates.yml
 
 - name: Install essential packages
   ansible.builtin.apt:
-    name: "{{ essential_packages }}"
+    name:
+      - curl
+      - wget
+      - git
+      - htop
+      - vim
+      - sudo
+      - net-tools
     state: present

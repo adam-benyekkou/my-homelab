@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+
+# Load environment variables
+export B2_ACCOUNT_ID="{{ b2_account_id }}"
+export B2_ACCOUNT_KEY="{{ b2_account_key }}"
+export RESTIC_REPOSITORY="b2:{{ b2_bucket_name }}:/"
+export RESTIC_PASSWORD="{{ restic_password }}"
+
+# Backup Ansible directory
+restic backup /home/{{ sysadmin_user | default('sysadmin') }}/homelab
+
+# Backup Docker volumes (stop containers if necessary for consistency, though Restic is good with open files)
+# docker stop $(docker ps -q)
+# restic backup /var/lib/docker/volumes
+# docker start ... (logic to restart)
+# Simpler approach: Backup bind mounts if you use them.
+
+# Prune old snapshots
+restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 6 --prune
