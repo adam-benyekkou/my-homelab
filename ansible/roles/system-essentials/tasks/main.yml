@@ -7,8 +7,11 @@
     update_cache: true
     cache_valid_time: 3600
 
-- import_tasks: users.yml
-- import_tasks: auto-updates.yml
+- name: Import User Management
+  ansible.builtin.import_tasks: users.yml
+
+- name: Import Auto Updates
+  ansible.builtin.import_tasks: auto-updates.yml
 
 - name: Install essential packages
   ansible.builtin.apt:

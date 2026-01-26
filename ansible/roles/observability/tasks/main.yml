@@ -18,19 +18,19 @@
 - name: Check if Promtail is installed
   ansible.builtin.stat:
     path: /usr/local/bin/promtail
-  register: promtail_bin
+  register: observability_promtail_bin
 
 - name: Download Promtail
   ansible.builtin.get_url:
     url: "https://github.com/grafana/loki/releases/download/v2.9.2/promtail-linux-amd64.zip"
     dest: "/tmp/promtail.zip"
-  when: not promtail_bin.stat.exists
+  when: not observability_promtail_bin.stat.exists
 
 - name: Install unzip
   ansible.builtin.apt:
     name: unzip
     state: present
-  when: not promtail_bin.stat.exists
+  when: not observability_promtail_bin.stat.exists
 
 - name: Unzip Promtail
   ansible.builtin.unarchive:
@@ -38,7 +38,7 @@
     dest: "/usr/local/bin"
     remote_src: yes
     mode: '0755'
-  when: not promtail_bin.stat.exists
+  when: not observability_promtail_bin.stat.exists
 
 - name: Create Promtail configuration directory
   ansible.builtin.file:
