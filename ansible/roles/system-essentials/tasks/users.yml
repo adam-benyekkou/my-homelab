@@ -14,7 +14,7 @@
     create_home: true
 
 - name: Set authorized key for sysadmin
-  ansible.builtin.authorized_key:
+  ansible.posix.authorized_key:
     user: "{{ sysadmin_user | default('sysadmin') }}"
     state: present
     key: "{{ sysadmin_ssh_public_key }}"
@@ -32,5 +32,5 @@
 - name: Lock root password (optional security measure)
   ansible.builtin.user:
     name: root
-    password_lock: yes
+    password_lock: true
   when: lock_root | default(false)
