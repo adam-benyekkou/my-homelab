@@ -2,6 +2,6 @@
 # apps.yml
 - name: Déploiement des applications
   hosts: all
-  become: yes
+  become: true
   roles:
     - apps

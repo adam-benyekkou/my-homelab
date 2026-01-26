@@ -2,7 +2,7 @@
 #system.yml
 - name: Configuration système de base
   hosts: all
-  become: yes
+  become: true
   roles:
     - system-essentials
     - security-hardening

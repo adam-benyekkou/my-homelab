@@ -1,5 +1,7 @@
 ---
 # site.yml
-- import_playbook: system.yml
+- name: System Configuration
+  import_playbook: system.yml
 # - import_playbook: infrastructure.yml # Missing file?
-- import_playbook: apps.yml
+- name: Application Deployment
+  import_playbook: apps.yml

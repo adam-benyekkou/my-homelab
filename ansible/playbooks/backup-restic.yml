@@ -1,14 +1,17 @@
 ---
 - name: Trigger Manual Backup
   hosts: all
-  become: yes
+  become: true
   tasks:
-    - import_role:
+    - name: Import Backup Role
+      ansible.builtin.import_role:
         name: backup
-        
+
     - name: Run Backup Script
-      command: /usr/local/bin/backup-homelab.sh
+      ansible.builtin.command: /usr/local/bin/backup-homelab.sh
       register: backup_output
-      
-    - debug:
+      changed_when: backup_output.rc != 0
+
+    - name: Display Backup Output
+      ansible.builtin.debug:
         var: backup_output.stdout_lines
