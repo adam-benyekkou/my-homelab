@@ -39,10 +39,6 @@ graph TD
             Docker[Docker Swarm/Compose]
         end
 
-        subgraph "AI Agents"
-            Moltbot[Moltbot AI Agent]
-        end
-        
         subgraph "Automation & Backup"
             Ansible[Ansible Config]
             Restic[Restic Backup]
@@ -53,8 +49,8 @@ graph TD
     subgraph "External Integration"
         GitHub[GitHub Actions] -->|CI/CD| VPS
         VPS -->|Encrypted Backup| B2[Backblaze B2]
-        Moltbot <-->|Updates| Telegram([Telegram])
     end
+
 
     User -->|SSO Login| Authentik
     ReverseProxy -->|Route| Authentik
@@ -104,7 +100,6 @@ Fully automated pipelines to ensure code quality and security:
 | **Observability** | Prometheus, Grafana, Loki, Promtail, AlertManager, Uptime Kuma |
 | **Development** | Gitea (Git Mirroring), Code-Server (Remote IDE) |
 | **Automation** | n8n |
-| **AI Agents** | Moltbot (Telegram Agent) |
 | **Content** | WordPress (CavyDev Blog), FreshRSS, Filestash |
 | **Dashboard** | Homarr |
 
