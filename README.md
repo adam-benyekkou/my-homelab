@@ -72,6 +72,8 @@ graph TD
     - `auto-updates`: Unattended security upgrades.
     - `observability`: Deploys Node Exporter and Promtail.
     - `backup`: Configures Restic with Backblaze B2.
+    - `maintenance`: Automated server tidying (Docker prune/log-truncate, APT cleanup, Restic verify/prune, 10-min Docker auto-healing).
+
   - **Playbooks**:
     - `bootstrap.yml`: Day 0 setup.
     - `maintenance.yml`: Automated patching and cleanup.

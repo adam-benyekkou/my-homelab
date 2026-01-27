@@ -1,0 +1,49 @@
+# SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/maintenance
+
+- name: Weekly Docker System Prune
+  ansible.builtin.cron:
+    name: "docker_cleanup"
+    weekday: "0"
+    hour: "3"
+    minute: "0"
+    job: "/usr/bin/docker system prune -af --volumes"
+
+- name: Weekly APT Housekeeping
+  ansible.builtin.cron:
+    name: "apt_cleanup"
+    weekday: "0"
+    hour: "4"
+    minute: "30"
+    job: "apt-get autoremove -y && apt-get autoclean -y"
+
+- name: Weekly Restic Backup Pruning
+  ansible.builtin.cron:
+    name: "restic_prune"
+    weekday: "6"
+    hour: "2"
+    minute: "0"
+    job: "/usr/local/bin/restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 6 --prune"
+
+- name: Monthly Docker Log Truncation
+  ansible.builtin.cron:
+    name: "docker_log_truncation"
+    day: "1"
+    hour: "5"
+    minute: "0"
+    job: "find /var/lib/docker/containers/ -name \"*.log\" -exec truncate -s 0 {} \\;"
+
+- name: Monthly Restic Integrity Check
+  ansible.builtin.cron:
+    name: "restic_verify"
+    day: "15"
+    hour: "4"
+    minute: "0"
+    job: "/usr/local/bin/restic check"
+
+- name: Auto-Healing - 10 Min Docker Reconciler
+  ansible.builtin.cron:
+    name: "docker_stack_reconciler"
+    minute: "*/10"
+    job: "find /home/{{ sysadmin_user | default('sysadmin') }}/homelab/stacks -type f -name 'docker-compose.yml' -execdir docker compose up -d \;"
