@@ -40,7 +40,7 @@ graph TD
         end
 
         subgraph "AI Agents"
-            Clawdcode[Clawdcode AI Agent]
+            Moltbot[Moltbot AI Agent]
         end
         
         subgraph "Automation & Backup"
@@ -53,7 +53,7 @@ graph TD
     subgraph "External Integration"
         GitHub[GitHub Actions] -->|CI/CD| VPS
         VPS -->|Encrypted Backup| B2[Backblaze B2]
-        Clawdcode <-->|Updates| Telegram([Telegram])
+        Moltbot <-->|Updates| Telegram([Telegram])
     end
 
     User -->|SSO Login| Authentik
@@ -104,7 +104,7 @@ Fully automated pipelines to ensure code quality and security:
 | **Observability** | Prometheus, Grafana, Loki, Promtail, AlertManager, Uptime Kuma |
 | **Development** | Gitea (Git Mirroring), Code-Server (Remote IDE) |
 | **Automation** | n8n |
-| **AI Agents** | Clawdcode (Telegram Agent) |
+| **AI Agents** | Moltbot (Telegram Agent) |
 | **Content** | WordPress (CavyDev Blog), FreshRSS, Filestash |
 | **Dashboard** | Homarr |
 
