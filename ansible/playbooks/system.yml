@@ -8,4 +8,5 @@
     - security-hardening
     - docker-runtime
     - maintenance
+    - watchtower
 

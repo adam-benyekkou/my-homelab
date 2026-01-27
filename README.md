@@ -42,8 +42,10 @@ graph TD
         subgraph "Automation & Backup"
             Ansible[Ansible Config]
             Restic[Restic Backup]
+            Watchtower[Watchtower]
             Cron[Cron Jobs]
         end
+
     end
     
     subgraph "External Integration"
@@ -73,6 +75,7 @@ graph TD
     - `observability`: Deploys Node Exporter and Promtail.
     - `backup`: Configures Restic with Backblaze B2.
     - `maintenance`: Automated server tidying (Docker prune/log-truncate, APT cleanup, Restic verify/prune, 10-min Docker auto-healing).
+    - `watchtower`: Automated Docker image updates.
 
   - **Playbooks**:
     - `bootstrap.yml`: Day 0 setup.
@@ -101,7 +104,7 @@ Fully automated pipelines to ensure code quality and security:
 | **Identity** | Authentik (SSO), HashiCorp Vault |
 | **Observability** | Prometheus, Grafana, Loki, Promtail, AlertManager, Uptime Kuma |
 | **Development** | Gitea (Git Mirroring), Code-Server (Remote IDE) |
-| **Automation** | n8n |
+| **Automation** | n8n, Watchtower |
 | **Content** | WordPress (CavyDev Blog), FreshRSS, Filestash |
 | **Dashboard** | Homarr |
 

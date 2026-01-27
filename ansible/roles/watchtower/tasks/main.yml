@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/watchtower
+
+- name: Create Watchtower directory
+  ansible.builtin.file:
+    path: "/home/{{ sysadmin_user | default('sysadmin') }}/homelab/stacks/watchtower"
+    state: directory
+    owner: "{{ sysadmin_user | default('sysadmin') }}"
+    group: "{{ sysadmin_user | default('sysadmin') }}"
+    mode: '0755'
+
+- name: Deploy Watchtower Compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "/home/{{ sysadmin_user | default('sysadmin') }}/homelab/stacks/watchtower/docker-compose.yml"
+    mode: '0644'
+
+- name: Start Watchtower stack
+  community.docker.docker_compose_v2:
+    project_src: "/home/{{ sysadmin_user | default('sysadmin') }}/homelab/stacks/watchtower"
+    state: present
