@@ -6,8 +6,15 @@ This repository manages the infrastructure and service configurations for my per
 
 ```mermaid
 graph TD
+    subgraph "Personal Workspace"
+        Personal[Personal Machine]
+        Antigravity[Antigravity MCP]
+        Personal <--> Antigravity
+    end
+
     User([User]) -->|HTTPS/443| CF[Cloudflare DNS]
     CF -->|Traffic| VPS[Hetzner VPS]
+    Personal -->|SSH| VPS
     
     subgraph "Hetzner VPS (Debian 12)"
         ReverseProxy[Traefik Proxy]
@@ -31,6 +38,10 @@ graph TD
             CodeServer[Code-Server]
             Docker[Docker Swarm/Compose]
         end
+
+        subgraph "AI Agents"
+            Clawdcode[Clawdcode AI Agent]
+        end
         
         subgraph "Automation & Backup"
             Ansible[Ansible Config]
@@ -42,6 +53,7 @@ graph TD
     subgraph "External Integration"
         GitHub[GitHub Actions] -->|CI/CD| VPS
         VPS -->|Encrypted Backup| B2[Backblaze B2]
+        Clawdcode <-->|Updates| Telegram([Telegram])
     end
 
     User -->|SSO Login| Authentik
@@ -92,6 +104,7 @@ Fully automated pipelines to ensure code quality and security:
 | **Observability** | Prometheus, Grafana, Loki, Promtail, AlertManager, Uptime Kuma |
 | **Development** | Gitea (Git Mirroring), Code-Server (Remote IDE) |
 | **Automation** | n8n |
+| **AI Agents** | Clawdcode (Telegram Agent) |
 | **Content** | WordPress (CavyDev Blog), FreshRSS, Filestash |
 | **Dashboard** | Homarr |
 
