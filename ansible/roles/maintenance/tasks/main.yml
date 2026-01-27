@@ -46,4 +46,4 @@
   ansible.builtin.cron:
     name: "docker_stack_reconciler"
     minute: "*/10"
-    job: "find /home/{{ sysadmin_user | default('sysadmin') }}/homelab/stacks -type f -name 'docker-compose.yml' -execdir docker compose up -d \;"
+    job: "find /home/{{ sysadmin_user | default('sysadmin') }}/homelab/stacks -type f -name 'docker-compose.yml' -execdir docker compose up -d \\;"
