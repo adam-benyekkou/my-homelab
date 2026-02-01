@@ -1,0 +1,81 @@
+services:
+  database:
+    image: postgres:15
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "${DB_PORT:-5433}:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./@back/database/migration/create-tables.sql:/docker-entrypoint-initdb.d/01-create-tables.sql
+      - ./@back/database/seeders/prod-data.sql:/docker-entrypoint-initdb.d/02-prod-data.sql
+    networks:
+      - default
+
+  backend:
+    image: cavydev/greenroots-backend:latest
+    build:
+      context: ./@back
+    depends_on:
+      - database
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
+      - POSTGRES_HOST=database
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - DB_HOST=database
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=5432
+      - STRIPE_PUBLIC_KEY=${STRIPE_PUBLIC_KEY}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - REDIRECT_CHECKOUT_PAGE=${REDIRECT_CHECKOUT_PAGE}
+    networks:
+      - default
+      - proxy-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy-network"
+      - "traefik.http.routers.backend.rule=Host(`greenroots.cavydev.com`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.tls.certresolver=myresolver"
+      - "traefik.http.services.backend.loadbalancer.server.port=3001"
+
+  frontend:
+    image: cavydev/greenroots-frontend:latest
+    build:
+      context: ./@front
+      args:
+        - VITE_API_URL=${VITE_API_URL}
+        - REDIRECT_CHECKOUT_PAGE=${REDIRECT_CHECKOUT_PAGE}
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=${VITE_API_URL}
+      - REDIRECT_CHECKOUT_PAGE=${REDIRECT_CHECKOUT_PAGE}
+    networks:
+      - default
+      - proxy-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy-network"
+      - "traefik.http.routers.frontend.rule=Host(`greenroots.cavydev.com`)"
+      - "traefik.http.routers.frontend.entrypoints=websecure"
+      - "traefik.http.routers.frontend.tls.certresolver=myresolver"
+      - "traefik.http.services.frontend.loadbalancer.server.port=3000"
+
+networks:
+  proxy-network:
+    external: true
+
+volumes:
+  db_data:

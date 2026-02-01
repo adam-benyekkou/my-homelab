@@ -1,4 +1,5 @@
 version: "3.8"
+
 services:
   n8n:
     image: n8nio/n8n:latest
@@ -11,23 +12,34 @@ services:
       - N8N_PORT=5678
       - N8N_PROTOCOL=https
       - WEBHOOK_URL=https://${N8N_DOMAIN}/
+      # POSTGRES CONFIGURATION (Correct)
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_HOST=postgres
       - DB_POSTGRESDB_PORT=5432
       - DB_POSTGRESDB_DATABASE=n8n
       - DB_POSTGRESDB_USER=n8n
       - DB_POSTGRESDB_PASSWORD=${N8N_DB_PASSWORD}
+      # TIMEZONE (Crucial for scheduling)
+      - GENERIC_TIMEZONE=Europe/Paris
     volumes:
       - ./n8n_data:/home/node/.n8n
     networks:
       - automation_network
       - proxy-network
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.n8n.rule=Host(`${N8N_DOMAIN}`)
-      - traefik.http.routers.n8n.entrypoints=websecure
-      - traefik.http.routers.n8n.tls.certresolver=myresolver
-      - traefik.http.services.n8n.loadbalancer.server.port=5678
+      - "traefik.enable=true"
+      - "traefik.http.routers.n8n.rule=Host(`${N8N_DOMAIN}`)"
+      - "traefik.http.routers.n8n.entrypoints=websecure"
+      - "traefik.http.routers.n8n.tls.certresolver=myresolver"
+      - "traefik.http.services.n8n.loadbalancer.server.port=5678"
+      # --- FIX FOR 504 TIMEOUTS ---
+      # Create a middleware called "n8n-middlewares" that disables buffering and limit
+      - "traefik.http.middlewares.n8n-buffering.buffering.maxRequestBodyBytes=10485760"
+      - "traefik.http.middlewares.n8n-buffering.buffering.memRequestBodyBytes=2097152"
+      - "traefik.http.middlewares.n8n-buffering.buffering.maxResponseBodyBytes=10485760"
+      - "traefik.http.middlewares.n8n-buffering.buffering.memResponseBodyBytes=2097152"
+      # Apply the middleware to the router
+      - "traefik.http.routers.n8n.middlewares=n8n-buffering"
 
   postgres:
     image: postgres:15-alpine
@@ -43,13 +55,12 @@ services:
       - ./postgres_data:/var/lib/postgresql/data
     networks:
       - automation_network
-
-  redis:
-    image: redis:7-alpine
-    container_name: redis
-    restart: unless-stopped
-    networks:
-      - automation_network
+    # Add a healthcheck to ensure n8n waits for Postgres to be ready
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U n8n"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 networks:
   automation_network:
